@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/todayFragment"
-        android:name="com.ngb.namaztime.ui.TodayFragment"
+        android:name="com.ngb.namaztime.ui.today.TodayFragment"
         android:label="today_fragment"
         tools:layout="@layout/today_fragment" />
     <fragment
         android:id="@+id/futureFragment"
-        android:name="com.ngb.namaztime.ui.FutureFragment"
+        android:name="com.ngb.namaztime.ui.future.FutureFragment"
         android:label="future_fragment"
         tools:layout="@layout/future_fragment" />
     <fragment

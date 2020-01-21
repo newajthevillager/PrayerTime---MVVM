@@ -1,4 +1,4 @@
-package com.ngb.namaztime.ui
+package com.ngb.namaztime.ui.future
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.ngb.namaztime.R
 
 class FutureFragment : Fragment() {

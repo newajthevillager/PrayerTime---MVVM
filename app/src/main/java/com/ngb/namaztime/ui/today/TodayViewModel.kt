@@ -1,7 +1,7 @@
-package com.ngb.namaztime.ui
+package com.ngb.namaztime.ui.today
 
 import androidx.lifecycle.ViewModel
 
-class FutureViewModel : ViewModel() {
+class TodayViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

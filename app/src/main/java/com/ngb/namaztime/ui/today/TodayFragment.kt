@@ -1,4 +1,4 @@
-package com.ngb.namaztime.ui
+package com.ngb.namaztime.ui.today
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.ngb.namaztime.R
+import com.ngb.namaztime.data.network.PrayerTimeApiService
+import kotlinx.android.synthetic.main.today_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodayFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = TodayFragment()
-    }
 
     private lateinit var viewModel: TodayViewModel
 
@@ -27,7 +29,14 @@ class TodayFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TodayViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        var prayerTimeApiService = PrayerTimeApiService()
+
+        GlobalScope.launch(Dispatchers.Main) {
+            var  response = prayerTimeApiService.getTodayPrayerTime("Chittagong", "Bangladesh", 8).await()
+            prayerTv.setText(response.todayData.toString())
+        }
+
     }
 
 }
