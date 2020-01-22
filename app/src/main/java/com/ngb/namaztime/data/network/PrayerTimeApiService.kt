@@ -28,9 +28,13 @@ interface PrayerTimeApiService {
     ) : Deferred<TodayResponse>
 
     companion object {
-        operator fun invoke() : PrayerTimeApiService {
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ) : PrayerTimeApiService {
 
-            val okHttpClient = OkHttpClient.Builder().build()
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(connectivityInterceptor)
+                .build()
 
             return Retrofit.Builder()
                 .client(okHttpClient)
