@@ -12,12 +12,13 @@ class PrayerTimeNetworkDataSourceImpl(
 
     private val fetchedTodayData = MutableLiveData<TodayResponse>()
 
-    override val fetcedData: LiveData<TodayResponse>
+    override val fetchedData: LiveData<TodayResponse>
         get() = fetchedTodayData
 
     override suspend fun fetchTodayPrayerTimeData(city: String, country: String) {
         try {
             val  response = prayerTimeApiService.getTodayPrayerTime(city, country, 8).await()
+            Log.d("MOT", " f ${response.toString()}")
             fetchedTodayData.postValue(response)
         } catch (e: NoInternetConnectionException) {
             Log.d("LLOOGG", e.toString())

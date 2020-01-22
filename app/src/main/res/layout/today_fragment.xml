@@ -9,6 +9,13 @@
         android:id="@+id/prayerTv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Today" />
+        android:text="" />
+
+
+    <TextView
+        android:id="@+id/prayerTv2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="" />
 
 </FrameLayout>

@@ -5,7 +5,7 @@ import com.ngb.namaztime.data.response.TodayResponse
 
 interface PrayerTimeNetworkDataSource {
 
-    val fetcedData : LiveData<TodayResponse>
+    val fetchedData : LiveData<TodayResponse>
 
     suspend fun fetchTodayPrayerTimeData(
         city: String,
