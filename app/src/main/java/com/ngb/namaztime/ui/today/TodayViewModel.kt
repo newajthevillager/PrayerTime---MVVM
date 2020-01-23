@@ -6,7 +6,7 @@ import com.ngb.namaztime.data.repository.PrayerTimeRepositoryImpl
 import com.ngb.namaztime.utils.lazyDeferred
 
 class TodayViewModel(
-    prayerTimeRepository: PrayerTimeRepositoryImpl
+    prayerTimeRepository: PrayerTimeRepository
 ) : ViewModel() {
 
     val prayerTime by lazyDeferred {

@@ -13,15 +13,12 @@ import kotlinx.coroutines.withContext
 
 class PrayerTimeRepositoryImpl(
     private val todayDataDao: TodayDataDao,
-    private val prayerTimeNetworkDataSource: PrayerTimeNetworkDataSourceImpl
+    private val prayerTimeNetworkDataSource: PrayerTimeNetworkDataSource
 ) : PrayerTimeRepository {
-
-    var data = MutableLiveData<TodayData>()
 
     init {
         prayerTimeNetworkDataSource.fetchedData.observeForever {
             persistTodayData(it.todayData)
-            data.postValue(it.todayData)
         }
     }
 

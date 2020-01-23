@@ -1,42 +1,28 @@
 package com.ngb.namaztime.ui.today
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-
+import androidx.lifecycle.ViewModelProviders
 import com.ngb.namaztime.R
 import com.ngb.namaztime.data.db.PrayerTimeDatabase
 import com.ngb.namaztime.data.network.ConnectivityInterceptorImpl
 import com.ngb.namaztime.data.network.PrayerTimeApiService
 import com.ngb.namaztime.data.network.PrayerTimeNetworkDataSourceImpl
 import com.ngb.namaztime.data.repository.PrayerTimeRepositoryImpl
-import com.ngb.namaztime.utils.NoInternetConnectionException
 import kotlinx.android.synthetic.main.today_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class TodayFragment : Fragment() {
+class TodayFragment : Fragment(R.layout.today_fragment) {
 
     private lateinit var viewModel: TodayViewModel
     private lateinit var viewModelFactory: TodayViewModelFactory
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.today_fragment, container, false)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
 
         var dao = PrayerTimeDatabase(this.context!!).todayDataDao()
         var prayerTimeApiService = PrayerTimeApiService(ConnectivityInterceptorImpl(this.context!!))
@@ -46,17 +32,48 @@ class TodayFragment : Fragment() {
         viewModelFactory = TodayViewModelFactory(repository)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TodayViewModel::class.java)
 
-
-//        repository.data.observe(this, Observer {
-//            prayerTv.text = it.toString()
-//        })
-
+        // should not use globalscope inside fragment/activity
+        // TODO change scope
         GlobalScope.launch(Dispatchers.Main) {
-            viewModel.prayerTime.await().observe(this@TodayFragment, Observer {
-                prayerTv.text = it.toString()
+            viewModel.prayerTime.await().observe(this@TodayFragment, Observer { todayData ->
+                if (todayData == null) return@Observer
+
+                pbToday.visibility = View.GONE
+                updateDateAndLocation(
+                    todayData.date.readable,
+                    todayData.date.gregorian.weekday.en,
+                    todayData.meta.timezone
+                )
+                updateTimings(
+                    todayData.timings.fajr,
+                    todayData.timings.dhuhr,
+                    todayData.timings.asr,
+                    todayData.timings.maghrib,
+                    todayData.timings.isha
+                )
             })
         }
 
+    }
+
+    private fun updateDateAndLocation(date: String, day: String, timezone: String) {
+        tvTodayDate.text = date
+        tvTodayDay.text = day
+        tvTodayTimeZone.text = "Time zone : $timezone"
+    }
+
+    private fun updateTimings(
+        fajr: String,
+        juhar: String,
+        asar: String,
+        magriv: String,
+        esha: String
+    ) {
+        tvTodayFajr.text = "Fajar : $fajr"
+        tvTodayJuhar.text = "Juhar : $juhar"
+        tvTodayAsr.text = "Asar : $asar"
+        tvTodayMagriv.text = "Magriv : $magriv"
+        tvTodayEsha.text = "Esha : $esha"
     }
 
 }

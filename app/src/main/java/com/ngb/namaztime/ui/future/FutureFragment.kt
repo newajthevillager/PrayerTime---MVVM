@@ -8,20 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ngb.namaztime.R
 
-class FutureFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = FutureFragment()
-    }
+class FutureFragment : Fragment(R.layout.future_fragment) {
 
     private lateinit var viewModel: FutureViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.future_fragment, container, false)
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
