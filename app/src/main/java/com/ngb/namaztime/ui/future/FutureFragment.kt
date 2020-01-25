@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ngb.namaztime.R
+import kotlinx.android.synthetic.main.future_fragment.*
 
 class FutureFragment : Fragment(R.layout.future_fragment) {
 
@@ -16,6 +17,7 @@ class FutureFragment : Fragment(R.layout.future_fragment) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(FutureViewModel::class.java)
         // TODO: Use the ViewModel
+
     }
 
 }

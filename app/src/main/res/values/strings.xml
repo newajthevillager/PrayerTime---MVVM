@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Namaz Time</string>
+
+    <string name="useDeviceLocation">USE_DEVICE_LOCATION</string>
+    <string name="customLocation">CUSTOM_LOCATION</string>
+
 </resources>

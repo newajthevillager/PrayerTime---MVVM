@@ -24,7 +24,7 @@ class PrayerTimeRepositoryImpl(
 
     // will fetch data from local db insted of directly fetching from remote
     override suspend fun fetchTodayPrayertime(): LiveData<TodayData> {
-        prayerTimeNetworkDataSource.fetchTodayPrayerTimeData("Kolkata", "India")
+        prayerTimeNetworkDataSource.fetchTodayPrayerTimeData("Chittagong", "Bangladesh")
         return withContext(Dispatchers.IO) {
             return@withContext todayDataDao.getTodaydata()
         }

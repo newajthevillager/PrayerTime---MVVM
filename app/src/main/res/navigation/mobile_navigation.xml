@@ -18,6 +18,6 @@
         tools:layout="@layout/future_fragment" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.ngb.namaztime.ui.SettingsFragment"
+        android:name="com.ngb.namaztime.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
 </navigation>

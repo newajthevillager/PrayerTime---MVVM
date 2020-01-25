@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Prayer Time Location">
+
+        <SwitchPreference
+            android:key="@string/useDeviceLocation"
+            android:title="Use Device Location"
+            android:summary="Allow the app to use device location"
+            android:defaultValue="true"
+            android:disableDependentsState="true"/>
+
+        <EditTextPreference
+            android:key="@string/customLocation"
+            android:title="Location"
+            android:summary="Set the desired city"
+            android:defaultValue="Chittagong"
+            android:dependency="USE_DEVICE_LOCATION" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -2,6 +2,7 @@ package com.ngb.namaztime.ui.today
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.today_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 class TodayFragment : Fragment(R.layout.today_fragment) {
 
@@ -39,7 +41,7 @@ class TodayFragment : Fragment(R.layout.today_fragment) {
                 if (todayData == null) return@Observer
 
                 pbToday.visibility = View.GONE
-                updateDateAndLocation(
+                updateDateAndTimeZone(
                     todayData.date.readable,
                     todayData.date.gregorian.weekday.en,
                     todayData.meta.timezone
@@ -51,12 +53,18 @@ class TodayFragment : Fragment(R.layout.today_fragment) {
                     todayData.timings.maghrib,
                     todayData.timings.isha
                 )
+                updateLocation("Chittagong", "Bangladesh")
             })
         }
 
     }
 
-    private fun updateDateAndLocation(date: String, day: String, timezone: String) {
+    private fun updateLocation(city: String, country: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = city
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = country
+    }
+
+    private fun updateDateAndTimeZone(date: String, day: String, timezone: String) {
         tvTodayDate.text = date
         tvTodayDay.text = day
         tvTodayTimeZone.text = "Time zone : $timezone"
