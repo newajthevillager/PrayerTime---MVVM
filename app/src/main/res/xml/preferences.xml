@@ -12,10 +12,17 @@
             android:disableDependentsState="true"/>
 
         <EditTextPreference
-            android:key="@string/customLocation"
-            android:title="Location"
+            android:key="@string/customCity"
+            android:title="City"
             android:summary="Set the desired city"
             android:defaultValue="Chittagong"
+            android:dependency="USE_DEVICE_LOCATION" />
+
+        <EditTextPreference
+            android:key="@string/customCountry"
+            android:title="Country"
+            android:summary="Set the desired country"
+            android:defaultValue="Bangladesh"
             android:dependency="USE_DEVICE_LOCATION" />
 
     </PreferenceCategory>

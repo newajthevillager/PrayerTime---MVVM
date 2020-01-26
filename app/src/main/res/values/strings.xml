@@ -2,6 +2,7 @@
     <string name="app_name">Namaz Time</string>
 
     <string name="useDeviceLocation">USE_DEVICE_LOCATION</string>
-    <string name="customLocation">CUSTOM_LOCATION</string>
+    <string name="customCity">CUSTOM_CITY</string>
+    <string name="customCountry">CUSTOM_COUNTRY</string>
 
 </resources>

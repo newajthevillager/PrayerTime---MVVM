@@ -19,18 +19,29 @@ class LocationProviderImpl(
 
     private val appContext = context.applicationContext
 
-    // TODO required similar things for country
-    // just like getCustomLocation, e.g getCustomCountry
-    override suspend fun getPreferredLocation(): String {
+    override suspend fun getPreferredCity(): String {
         if (isUsingDeviceLocation()) {
             try {
                 val deviceLocation = getLastDeviceLocation().await()
                 return "${deviceLocation.latitude}, ${deviceLocation.longitude}"
             } catch (e: LocationPermissionNotGrantedException) {
-                return getCustomLocation()
+                return getCustomCity()
             }
         } else {
-            return getCustomLocation()
+            return getCustomCity()
+        }
+    }
+
+    override suspend fun getPreferredCountry(): String {
+        if (isUsingDeviceLocation()) {
+            try {
+                val deviceLocation = getLastDeviceLocation().await()
+                return "${deviceLocation.latitude}, ${deviceLocation.longitude}"
+            } catch (e: LocationPermissionNotGrantedException) {
+                return getCustomCountry()
+            }
+        } else {
+            return getCustomCountry()
         }
     }
 
@@ -41,10 +52,17 @@ class LocationProviderImpl(
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun getCustomLocation(): String {
+    private fun getCustomCity(): String {
         return preferences.getString(
-            context.resources.getString(R.string.customLocation),
+            context.resources.getString(R.string.customCity),
             "Chittagong"
+        )
+    }
+
+    private fun getCustomCountry(): String {
+        return preferences.getString(
+            context.resources.getString(R.string.customCountry),
+            "Bangladesh"
         )
     }
 

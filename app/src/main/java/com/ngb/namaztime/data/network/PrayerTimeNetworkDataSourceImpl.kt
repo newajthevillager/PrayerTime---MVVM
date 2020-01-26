@@ -18,10 +18,9 @@ class PrayerTimeNetworkDataSourceImpl(
     override suspend fun fetchTodayPrayerTimeData(city: String, country: String) {
         try {
             val  response = prayerTimeApiService.getTodayPrayerTime(city, country, 8).await()
-            Log.d("MOT", " f ${response.toString()}")
             fetchedTodayData.postValue(response)
+            Log.d("LLL", "city $city, Country $country")
         } catch (e: NoInternetConnectionException) {
-            Log.d("LLOOGG", e.toString())
         }
     }
 }

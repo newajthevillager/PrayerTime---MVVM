@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.location.LocationServices
 import com.ngb.namaztime.R
 import com.ngb.namaztime.data.db.PrayerTimeDatabase
 import com.ngb.namaztime.data.network.ConnectivityInterceptorImpl
 import com.ngb.namaztime.data.network.PrayerTimeApiService
 import com.ngb.namaztime.data.network.PrayerTimeNetworkDataSourceImpl
+import com.ngb.namaztime.data.provider.LocationProviderImpl
 import com.ngb.namaztime.data.repository.PrayerTimeRepositoryImpl
 import kotlinx.android.synthetic.main.today_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +31,9 @@ class TodayFragment : Fragment(R.layout.today_fragment) {
         var dao = PrayerTimeDatabase(this.context!!).todayDataDao()
         var prayerTimeApiService = PrayerTimeApiService(ConnectivityInterceptorImpl(this.context!!))
         var prayerTimeNetworkDataSource = PrayerTimeNetworkDataSourceImpl(prayerTimeApiService)
-        var repository = PrayerTimeRepositoryImpl(dao, prayerTimeNetworkDataSource)
+        var fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.context!!)
+        var locationprovider = LocationProviderImpl(this.context!!, fusedLocationProviderClient)
+        var repository = PrayerTimeRepositoryImpl(dao, prayerTimeNetworkDataSource, locationprovider)
 
         viewModelFactory = TodayViewModelFactory(repository)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TodayViewModel::class.java)
