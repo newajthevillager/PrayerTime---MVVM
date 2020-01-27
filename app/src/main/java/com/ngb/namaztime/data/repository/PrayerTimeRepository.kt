@@ -13,4 +13,8 @@ interface PrayerTimeRepository {
 
     suspend fun fetchTodayPrayertime(): LiveData<TodayData>
 
+    suspend fun fethCity(): LiveData<String>
+
+    suspend fun fetchCountry(): LiveData<String>
+
 }

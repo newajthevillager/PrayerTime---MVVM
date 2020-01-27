@@ -1,6 +1,7 @@
 package com.ngb.namaztime.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.ngb.namaztime.data.db.TodayDataDao
 import com.ngb.namaztime.data.db.entities.TodayData
 import com.ngb.namaztime.data.network.PrayerTimeNetworkDataSource
@@ -16,6 +17,9 @@ class PrayerTimeRepositoryImpl(
     private val locationProvider: LocationProvider
 ) : PrayerTimeRepository {
 
+    var city = MutableLiveData<String>()
+    var country = MutableLiveData<String>()
+
     init {
         prayerTimeNetworkDataSource.fetchedData.observeForever {
             persistTodayData(it.todayData)
@@ -30,6 +34,20 @@ class PrayerTimeRepositoryImpl(
         )
         return withContext(Dispatchers.IO) {
             return@withContext todayDataDao.getTodaydata()
+        }
+    }
+
+    override suspend fun fethCity(): LiveData<String> {
+        return withContext(Dispatchers.IO) {
+            city.postValue(locationProvider.getPreferredCity())
+            return@withContext city
+        }
+    }
+
+    override suspend fun fetchCountry(): LiveData<String> {
+        return withContext(Dispatchers.IO) {
+            country.postValue(locationProvider.getPreferredCountry())
+            return@withContext country
         }
     }
 

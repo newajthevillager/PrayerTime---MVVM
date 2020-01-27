@@ -35,7 +35,7 @@ class TodayFragment : Fragment(R.layout.today_fragment) {
         var locationprovider = LocationProviderImpl(this.context!!, fusedLocationProviderClient)
         var repository = PrayerTimeRepositoryImpl(dao, prayerTimeNetworkDataSource, locationprovider)
 
-        viewModelFactory = TodayViewModelFactory(repository)
+        viewModelFactory = TodayViewModelFactory(repository, locationprovider)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TodayViewModel::class.java)
 
         // should not use globalscope inside fragment/activity
@@ -57,15 +57,23 @@ class TodayFragment : Fragment(R.layout.today_fragment) {
                     todayData.timings.maghrib,
                     todayData.timings.isha
                 )
-                updateLocation("Chittagong", "Bangladesh")
+            })
+            viewModel.cityName.await().observe(this@TodayFragment, Observer {
+                updateCity(it)
+            })
+            viewModel.countryName.await().observe(this@TodayFragment, Observer {
+                updateCountry(it)
             })
         }
 
     }
 
-    private fun updateLocation(city: String, country: String) {
-        (activity as? AppCompatActivity)?.supportActionBar?.title = city
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = country
+    private fun updateCity(city: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = city
+    }
+
+    private fun updateCountry(country: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = country
     }
 
     private fun updateDateAndTimeZone(date: String, day: String, timezone: String) {
